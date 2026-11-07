@@ -19,18 +19,21 @@ The included demo walkthrough uses a Wi-Fi outage report in CSE Block, Room 302.
 
 ## Architecture
 
+**Current implementation:** The application currently runs a deterministic demo workflow through the CampusPulse FastAPI backend.
+
+**Planned live architecture:** The diagram below shows the intended integration with Switch shared rooms and four specialized agents. Live Switch communication has not yet been verified.
+
 ```mermaid
 flowchart LR
-  Student[Student or staff] --> Discord[Discord channel]
-  Discord --> Switch[Switch shared room]
-  Switch --> Pulse[Pulse · Incident manager]
-  Pulse --> Sherlock[Sherlock · Investigation]
-  Sherlock --> Fixer[Fixer · Resolution proposal]
-  Fixer --> Guardian[Guardian · Verification]
-  Guardian --> Human[Authorized human approval]
-  Human --> API[CampusPulse FastAPI]
-  API --> DB[(SQLite / PostgreSQL-compatible SQLAlchemy)]
-  API --> UI[React + TypeScript dashboard]
+  Student[Student or staff] --> API[CampusPulse FastAPI]
+  API --> Pulse[Pulse - Incident manager]
+  Pulse --> Sherlock[Sherlock - Investigation]
+  Sherlock --> Fixer[Fixer - Resolution proposal]
+  Fixer --> Guardian[Guardian - Verification]
+  Guardian --> Human[Human approval]
+  Human --> DB[(SQLite / PostgreSQL)]
+  DB --> UI[React dashboard]
+  Pulse -. Planned integration .-> Switch[Switch shared room]
 ```
 
 ## Technology
@@ -156,20 +159,3 @@ pytest
 
 Choose a project license before publishing the repository publicly.
 
-## Architecture
-
-**Current implementation:** The application currently runs a deterministic demo workflow through the CampusPulse FastAPI backend.
-
-**Planned live architecture:** The following diagram represents the intended integration with Switch shared rooms and four specialized agents. Live Switch communication has not yet been verified.
-
-```mermaid
-flowchart LR
-  Student[Student or Staff] --> API[CampusPulse FastAPI]
-  API --> Pulse[Pulse - Incident Manager]
-  Pulse --> Sherlock[ Sherlock - Investigation]
-  Sherlock --> Fixer[Fixer - Resolution Proposal]
-  Fixer --> Guardian[Guardian - Verification]
-  Guardian --> Human[Human Approval]
-  Human --> DB[(SQLite Database)]
-  DB --> UI[React Dashboard]
-  Pulse -. Planned integration .-> Switch[Switch Shared Room]

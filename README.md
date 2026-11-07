@@ -155,3 +155,21 @@ pytest
 ## License
 
 Choose a project license before publishing the repository publicly.
+
+## Architecture
+
+**Current implementation:** The application currently runs a deterministic demo workflow through the CampusPulse FastAPI backend.
+
+**Planned live architecture:** The following diagram represents the intended integration with Switch shared rooms and four specialized agents. Live Switch communication has not yet been verified.
+
+```mermaid
+flowchart LR
+  Student[Student or Staff] --> API[CampusPulse FastAPI]
+  API --> Pulse[Pulse - Incident Manager]
+  Pulse --> Sherlock[ Sherlock - Investigation]
+  Sherlock --> Fixer[Fixer - Resolution Proposal]
+  Fixer --> Guardian[Guardian - Verification]
+  Guardian --> Human[Human Approval]
+  Human --> DB[(SQLite Database)]
+  DB --> UI[React Dashboard]
+  Pulse -. Planned integration .-> Switch[Switch Shared Room]
